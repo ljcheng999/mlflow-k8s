@@ -1,7 +1,7 @@
 # MLflow connecting to Kubernetes cluster
 
 ## Important note: 
-All the following is only for local environment
+Please **DO NOT** do the following in the production environment. All the following is **ONLY** for local environment because it has some password and everywhere-allowed access.
 
 ### Cluster config
 This local cluster is using Kind to create (kind-config)
@@ -74,4 +74,10 @@ Note:
 
 ### if error show the port is being used
 pkill -f "kubectl port-forward svc/mlflow" || true
+```
+
+### To clean up the experiments in local machine
+```
+mlflow gc --tracking-uri "http://localhost:8081" --backend-store-uri sqlite:///./mlflow.db --experiment-ids 2
+mlflow gc --tracking-uri sqlite:///./mlflow.db --backend-store-uri sqlite:///./mlflow.db --experiment-ids 2
 ```
