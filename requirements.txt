@@ -1,0 +1,5 @@
+mlflow
+pandas
+flask
+scikit-learn
+psycopg2-binary

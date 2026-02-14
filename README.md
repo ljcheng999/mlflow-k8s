@@ -81,3 +81,15 @@ pkill -f "kubectl port-forward svc/mlflow" || true
 mlflow gc --tracking-uri "http://localhost:8081" --backend-store-uri sqlite:///./mlflow.db --experiment-ids 2
 mlflow gc --tracking-uri sqlite:///./mlflow.db --backend-store-uri sqlite:///./mlflow.db --experiment-ids 2
 ```
+
+```
+### Build docker image
+docker build -t mlflow-k8s-diabetes-datasets:1.0.0 .
+
+### Load docker image from docker to host 
+kind load docker-image mlflow-k8s-diabetes-datasets:1.0.0 --name kind-mlops-cluster1
+
+kubectl rollout status deployment/diabetes-model-server --timeout=120s
+
+kubectl port-forward svc/diabetes-model-server-svc 5002:80
+```
