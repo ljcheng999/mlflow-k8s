@@ -84,7 +84,16 @@ mlflow gc --tracking-uri sqlite:///./mlflow.db --backend-store-uri sqlite:///./m
 
 ```
 ### Build docker image
-docker build -t mlflow-k8s-diabetes-datasets:1.0.0 .
+
+DOCKER_REPO=jcheng919
+DOCKER_IMG=mlflow-k8s-diabetes-datasets
+DOCKER_TAG=1.0.1
+
+docker build -t $DOCKER_IMG:$DOCKER_TAG .
+docker tag $DOCKER_IMG:$DOCKER_TAG $DOCKER_REPO/$DOCKER_IMG:$DOCKER_TAG
+docker push $DOCKER_REPO/$DOCKER_IMG:$DOCKER_TAG
+
+
 
 ### Load docker image from docker to host 
 kind load docker-image mlflow-k8s-diabetes-datasets:1.0.0 --name kind-mlops-cluster1
@@ -92,4 +101,10 @@ kind load docker-image mlflow-k8s-diabetes-datasets:1.0.0 --name kind-mlops-clus
 kubectl rollout status deployment/diabetes-model-server --timeout=120s
 
 kubectl port-forward svc/diabetes-model-server-svc 5002:80
+(screenshot - k8s-healthcheck attached)
+
+curl -X POST http://localhost:5002/predict \
+  -H "Conten-type: application/json" \
+  -d '[{ "age": 0.05, "sec": 0.05, "bmi": 0.05, "bp": 0.05, "s1": 0.05, "s2": 0.05, "s3": 0.05, "s4": 0.05, "s5": 0.05, "s6": 0.05 }]'
+
 ```

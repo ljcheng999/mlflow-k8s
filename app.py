@@ -29,14 +29,14 @@ def load_model():
   
 
 
-@app.route("/health", method=["GET"])
+@app.route("/health", methods=["GET"])
 def health():
   return jsonify({
     "status": "healthy",
     "model_loaded": model is not None
   })
 
-@app.route("/predict", method=["POST"])
+@app.route("/predict", methods=["POST"])
 def predict():
   global model
   if model is None:

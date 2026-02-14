@@ -15,8 +15,7 @@ spec:
     spec:
       containers:
       - name: diabetes-model-server-mlflow
-        image: mlflow-k8s-diabetes-datasets:1.0.0
-        imagePullPolicy: Never
+        image: jcheng919/mlflow-k8s-diabetes-datasets:1.0.1
         ports:
         - containerPort: 5001
         env:
