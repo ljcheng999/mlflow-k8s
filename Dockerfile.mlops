@@ -1,0 +1,17 @@
+FROM python:3.13-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY train_mlflow.py .
+COPY app.py .
+COPY run_pipeline.sh .
+COPY data/diabetes.csv ./data/
+# RUN mkdir -p data && cp data/diabetes.csv data/
+
+RUN chmod +x run_pipeline.sh
+
+CMD ["./run_pipeline.sh"]

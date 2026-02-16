@@ -36,20 +36,15 @@ if __name__ == "__main__":
 
   load_dotenv()
 
-
-
-
   logging.basicConfig(level=logging.WARN)
   logger = logging.getLogger(__name__)
 
   logger.error(f"MLflow version: {mlflow.__version__}")
 
-
-
   mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI", "http://localhost:8081"))
-  mlflow.set_experiment(os.getenv("MLFLOW_EXPERIMENT_NAME", "Diabetes_ElasticNet_v2"))
+  mlflow.set_experiment(os.getenv("MLFLOW_EXPERIMENT_NAME", "Diabetes_ElasticNet_v3"))
 
-  get_experiment(os.getenv("MLFLOW_EXPERIMENT_NAME", "Diabetes_ElasticNet_v2"))
+  # get_experiment(os.getenv("MLFLOW_EXPERIMENT_NAME", "Diabetes_ElasticNet_v3"))
   
 
   if not os.path.exists(DATA_PATH):
@@ -78,17 +73,12 @@ if __name__ == "__main__":
   # # Split the data into training and test sets. (0.75, 0.25) split.
   # train, test = train_test_split(data)
   # # The predicted column is "quality" which is a scalar from [3, 9]
-  # train_x = train.drop(["quality"], axis=1)
-  # test_x = test.drop(["quality"], axis=1)
-  # train_y = train[["quality"]]
-  # test_y = test[["quality"]]
+  # train_x = train.2
 
   train_x, test_x, train_y, test_y = train_test_split(X, Y)
 
   alpha = 0.5
   l1_ratio = 0.5
-
-
 
 
   with mlflow.start_run() as run:
@@ -109,14 +99,15 @@ if __name__ == "__main__":
     mlflow.log_metric("r2", r2)
     mlflow.log_metric("mae", mae)
 
+
     mlflow.sklearn.log_model(
       sk_model = lr,
-      artifact_path = "model",
-      registered_model_name = "DEM",
+      name = "model",
+      registered_model_name = "DEM3",
     )
 
-    # print(run.info.to_proto())
-    # print(run.data.to_dictionary())
+    print(run.info.to_proto())
+    print(run.data.to_dictionary())
     print(f"Done")
   
 
