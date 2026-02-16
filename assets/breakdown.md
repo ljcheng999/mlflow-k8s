@@ -18,9 +18,9 @@ Now we introduce the "student" (the algorithm) to the "textbook" (the training d
 After training, we need to know how well the model performed on data it has **never seen before.**
 - predict = lr.predict(test_x): We give the model the test inputs and ask, "Based on what you learned, what do you think the results are?"
 - eval_matrice(test_y, predict): We compare the model's guesses against the actual real-world answers. We use three specific metrics:
-1. **RMSE (Root Mean Squared Error)**: Tells us how far off the predictions are on average (penalizing large errors heavily).
-2. **MAE (Mean Absolute Error)**: The average "distance" between the guess and the truth.
-3. **R² (R-Squared)**: Tells us what percentage of the variation in the data the model actually explains. An $R^2$ of 1.0 is perfect; 0.0 is essentially a random guess.
+1. **RMSE (Root Mean Squared Error)**: Tells us how far off the predictions are on average (penalizing large errors heavily). It measures prediction error magnitude. **Lower is better**. Typically range: 20-30ms
+2. **MAE (Mean Absolute Error)**: The average "distance" between the guess and the truth. Measures how well the model explains data variance. Range: 0-1, **higher is better**. Target: **0.85+**
+3. **R² (R-Squared)**: Tells us what percentage of the variation in the data the model actually explains. An $R^2$ of 1.0 is perfect; 0.0 is essentially a random guess. Average prediction error. **Lower is better**, similar to RMSE but less sensitive to outliners.
 
 ## 4. MLOps: Tracking with MLflow
 In a professional environment, you don't just run code once. You run it hundreds of times with different settings (hyperparameters).

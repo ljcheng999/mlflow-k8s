@@ -1,0 +1,49 @@
+executor: "LocalExecutor"
+
+postgresql:
+  enabled: true
+  image:
+    repository: bitnamilegacy/postgresql
+    # tag: latest
+    tag: 17.6.0-debian-12-r4
+
+redis:
+  enabled: false
+
+dags:
+  gitSync:
+    enabled: false
+  persistence:
+    enabled: false
+
+webserver:
+  service:
+    type: ClusterIP
+  extraVolumes:
+    - name: dag-volume
+      configMap:
+        name: airflow-dags
+  extraVolumeMounts:
+    - name: dag-volume
+      mountPath: /opt/airflow/dags/diabetes_dag.py
+      subPath: diabetes_dag.py
+
+scheduler:
+  extraVolumes:
+    - name: dag-volume
+      configMap:
+        name: airflow-dags
+  extraVolumeMounts:
+    - name: dag-volume
+      mountPath: /opt/airflow/dags/diabetes_dag.py
+      subPath: diabetes_dag.py
+
+dagProcesspr:
+  extraVolumes:
+    - name: dag-volume
+      configMap:
+        name: airflow-dags
+  extraVolumemounts:
+    - name: dag-volume
+      mountPath: /opt/airflow/dags/diabetes_dag.py
+      subPath: diabetes_dag.py
